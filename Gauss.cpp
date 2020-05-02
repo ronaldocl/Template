@@ -23,7 +23,7 @@ struct Gauss{
 		assert(SZ(A) == SZ(b));
 		int rows = SZ(A), cols = SZ(A[0]);
 		assert(rows >= cols);
-		
+
 		rep(i, 0, cols){
 			int largest = i;
 			rep(j, i, rows) 
@@ -55,8 +55,8 @@ struct Gauss{
 
 int main(){
 
-	VVD A{{1, 2, 3}, {4, 5, 6}, {7, 8, 9}, {10, 11, 12}};
-	VD b{0.5, 1.3, 2.5, 6.321};
+	VVD A{{2, 1}, {3, -5}};
+	VD b{3, 4};
 
 	Gauss sol;
 
