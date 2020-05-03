@@ -101,6 +101,13 @@ namespace Number {
 		while(b){ if(b&1) res=res*t%m; t=t*t%m; b>>=1; }
 		return res;
 	}
+
+	// inversion of a mod m: if gcd(a, m) != 1, inversion does not exist, return -1;
+	ll inv(ll a, ll m){
+		ll d, x, y;
+		ex_gcd(a, m, d, x, y);
+		return d == 1 ? (x+m)%m : -1;
+	}
 }
 
 
