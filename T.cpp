@@ -7,6 +7,10 @@ using namespace std;
 #define se second
 #define all(a) a.begin(), a.end()
 #define SZ(a) int(a.size())
+#define ffs __builtin_ffs
+#define clz __builtin_clz
+#define ctz __builtin_ctz
+#define popcount __builtin_popcount
 using ll = long long;
 using ld = double;
 using VI = vector<int>;
