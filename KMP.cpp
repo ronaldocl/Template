@@ -39,7 +39,7 @@ struct KMP{
 			while(k != -1 && s[i] != p[k+1]) k = pre[k];
 			if(s[i] == p[k+1]) k ++;
 			if(k == m-1){   
-				return true;    // find p in s    
+				return true;  
 			}
 		}
 		return false;
