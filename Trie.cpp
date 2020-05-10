@@ -22,11 +22,11 @@ using PII = pair<int, int>;
 const ll M = 1e9 + 7;
 /*--------------------------------------*/
 
-namespace AC{
+namespace TRIE{
 	const int MAXN = 500100;
 	const int SIGMA_SIZE = 26;
 	int ch[MAXN][SIGMA_SIZE], sz;
-	int f[MAXN], val[MAXN];
+	int val[MAXN];
 
 	void Init(){
 		sz = 1; memset(ch[0], 0, sizeof(ch[0]));
@@ -46,36 +46,13 @@ namespace AC{
 		val[u] ++;
 	}
 
-	void GetFail(){
-		queue<int> q;
-		f[0] = 0;
-		rep(c, 0, SIGMA_SIZE){
-			int u = ch[0][c];
-			if(u) f[u] = 0, q.push(u);
-		}
-		while(!q.empty()){
-			int r = q.front(); q.pop();
-			rep(c, 0, SIGMA_SIZE){
-				int u = ch[r][c];
-				if(!u) continue;
-				q.push(u);
-				int v = f[r];
-				while(v && !ch[v][c]) v = f[v];
-				f[u] = ch[v][c];
-			}
-		}
-	}
-
 	int Find(string& s){
-		int n = SZ(s);
-		int k = 0, ans = 0;
+		int u = 0, n = SZ(s);
 		rep(i, 0, n){
 			int c = s[i] - 'a';
-			while(k && !ch[k][c]) k = f[k];
-			k = ch[k][c];
-			int t = k;
-			while(t) ans += val[t], val[t] = 0, t = f[t];  // match found
-		}
-		return ans;
+			if(!ch[u][c]) return false;  // mismatch
+			u = ch[u][c];
+		}	
+		return val[u] > 0;  // 1-found, 0-not found
 	}
 }
