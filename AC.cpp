@@ -19,63 +19,66 @@ using VD = vector<ld>;
 using VVD = vector<VD>;
 using VS = vector<string>;
 using PII = pair<int, int>;
+using VPII = vector<PII>;
 const ll M = 1e9 + 7;
 /*--------------------------------------*/
 
 namespace AC{
-	const int MAXN = 500100;
-	const int SIGMA_SIZE = 26;
-	int ch[MAXN][SIGMA_SIZE], sz;
-	int f[MAXN], val[MAXN];
+    const int MAXN = 1010;
+    const int MAXC = 26;
+    int g[MAXN][MAXC], sz;  // trie goto
+    int f[MAXN];            // suffix link
+    int out[MAXN];          // output link   
+    int val[MAXN];          // node value 
 
-	void Init(){
-		sz = 1; memset(ch[0], 0, sizeof(ch[0]));
-	}
+    void Init(){
+        memset(g[0], 0, sizeof(g[0]));
+        val[0] = 0; f[0] = 0; sz = 1;
+    }
 
-	void Insert(string& s){
-		int u = 0, n = SZ(s);
-		rep(i, 0, n){
-			int c = s[i] - 'a';
-			if(!ch[u][c]){
-				memset(ch[sz], 0, sizeof(ch[sz]));
-				val[sz] = 0;
-				ch[u][c] = sz++;
-			}
-			u = ch[u][c];
-		}
-		val[u] ++;
-	}
+    void Insert(string& s){
+        int u = 0, n = SZ(s);
+        rep(i, 0, n){
+            int c = s[i] - 'a';
+            if(!g[u][c]){
+                memset(g[sz], 0, sizeof(g[sz]));
+                val[sz] = 0;
+                g[u][c] = sz++;
+            }
+            u = g[u][c];
+        }
+        val[u] ++;
+    }
 
-	void GetFail(){
-		queue<int> q;
-		f[0] = 0;
-		rep(c, 0, SIGMA_SIZE){
-			int u = ch[0][c];
-			if(u) f[u] = 0, q.push(u);
-		}
-		while(!q.empty()){
-			int r = q.front(); q.pop();
-			rep(c, 0, SIGMA_SIZE){
-				int u = ch[r][c];
-				if(!u) continue;
-				q.push(u);
-				int v = f[r];
-				while(v && !ch[v][c]) v = f[v];
-				f[u] = ch[v][c];
-			}
-		}
-	}
+    void Build(){
+        queue<int> q;
+        rep(c, 0, MAXC){
+            if(g[0][c]) q.push(g[0][c]), f[g[0][c]] = 0;
+        }
+        while(!q.empty()) {
+            int state = q.front(); q.pop();
+            rep(c, 0, MAXC) {
+                if(g[state][c]) {
+                    int v = f[state];
+                    while(v && !g[v][c]) v = f[v];
+                    f[g[state][c]] = g[v][c];
+                    out[g[state][c]] = val[g[v][c]] ? g[v][c] : out[g[v][c]];
+                    q.push(g[state][c]);
+                }
+            }   
+        }
+    }
 
-	int Find(string& s){
-		int n = SZ(s);
-		int k = 0, ans = 0;
-		rep(i, 0, n){
-			int c = s[i] - 'a';
-			while(k && !ch[k][c]) k = f[k];
-			k = ch[k][c];
-			int t = k;
-			while(t) ans += val[t], val[t] = 0, t = f[t];  // match found
-		}
-		return ans;
-	}
+    int Search(string& s){
+        int u = 0, n = SZ(s);
+        int ans = 0;
+        rep(i, 0, n){
+            int c = s[i] - 'a';
+            while(u && !g[u][c]) u = f[u]; 
+            u = g[u][c];
+            int v = u;
+            while(v) ans += val[v], val[v] = 0, v = out[v];
+        }
+        return ans;
+    }
 }

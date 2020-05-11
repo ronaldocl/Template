@@ -19,6 +19,7 @@ using VD = vector<ld>;
 using VVD = vector<VD>;
 using VS = vector<string>;
 using PII = pair<int, int>;
+using VPII = vector<PII>; 
 const ll M = 1e9 + 7;
 /*--------------------------------------*/
  

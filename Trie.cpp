@@ -23,25 +23,25 @@ const ll M = 1e9 + 7;
 /*--------------------------------------*/
 
 namespace TRIE{
-	const int MAXN = 500100;
-	const int SIGMA_SIZE = 26;
-	int ch[MAXN][SIGMA_SIZE], sz;
+	const int MAXN = 10100;
+	const int MAXC = 26;
+	int g[MAXN][MAXC], sz;
 	int val[MAXN];
 
 	void Init(){
-		sz = 1; memset(ch[0], 0, sizeof(ch[0]));
+		sz = 1; memset(g[0], 0, sizeof(g[0]));
 	}
 
 	void Insert(string& s){
 		int u = 0, n = SZ(s);
 		rep(i, 0, n){
 			int c = s[i] - 'a';
-			if(!ch[u][c]){
-				memset(ch[sz], 0, sizeof(ch[sz]));
+			if(!g[u][c]){
+				memset(g[sz], 0, sizeof(g[sz]));
 				val[sz] = 0;
-				ch[u][c] = sz++;
+				g[u][c] = sz++;
 			}
-			u = ch[u][c];
+			u = g[u][c];
 		}
 		val[u] ++;
 	}
@@ -50,8 +50,8 @@ namespace TRIE{
 		int u = 0, n = SZ(s);
 		rep(i, 0, n){
 			int c = s[i] - 'a';
-			if(!ch[u][c]) return false;  // mismatch
-			u = ch[u][c];
+			if(!g[u][c]) return false;  // mismatch
+			u = g[u][c];
 		}	
 		return val[u] > 0;  // 1-found, 0-not found
 	}
