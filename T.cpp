@@ -20,8 +20,10 @@ using VVD = vector<VD>;
 using VS = vector<string>;
 using PII = pair<int, int>;
 using VPII = vector<PII>; 
-inline void ckmax(int& x, int y) { if(y > x) x = y; }
-inline void ckmin(int& x, int y) { if(y < x) x = y; }
+template<typename T1, typename T2>
+inline void ckmax(T1& x, T2 y) { if(y > x) x = y; }
+template<typename T1, typename T2>
+inline void ckmin(T1& x, T2 y) { if(y < x) x = y; }
 mt19937 rnd(random_device{}());
 const ll M = 1e9 + 7;
 /*--------------------------------------*/
