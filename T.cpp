@@ -11,6 +11,9 @@ using namespace std;
 #define clz __builtin_clz
 #define ctz __builtin_ctz
 #define popcount __builtin_popcount
+inline void ckmax(int& x, int y) { if(y > x) x = y; }
+inline void ckmin(int& x, int y) { if(y < x) x = y; }
+mt19937 rnd(random_device{}());
 using ll = long long;
 using ld = double;
 using VI = vector<int>;
