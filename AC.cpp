@@ -43,6 +43,7 @@ namespace AC{
             if(!g[u][c]){
                 memset(g[sz], 0, sizeof(g[sz]));
                 val[sz] = 0;
+                out[sz] = 0;
                 g[u][c] = sz++;
             }
             u = g[u][c];
