@@ -21,9 +21,9 @@ using VS = vector<string>;
 using PII = pair<int, int>;
 using VPII = vector<PII>; 
 template<typename T1, typename T2>
-inline void ckmax(T1& x, T2 y) { if(y > x) x = y; }
+inline bool ckmax(T1& x, T2 y) { return y > x ? x = y, 1 : 0; }
 template<typename T1, typename T2>
-inline void ckmin(T1& x, T2 y) { if(y < x) x = y; }
+inline bool ckmin(T1& x, T2 y) { return y < x ? x = y, 1 : 0; }
 mt19937 rnd(random_device{}());
 const ll M = 1e9 + 7;
 /*--------------------------------------*/
