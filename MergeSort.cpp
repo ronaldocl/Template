@@ -13,7 +13,7 @@ using namespace std;
 #define popcount __builtin_popcount
 using ll = long long;
 using ld = double;
-using VI = vector<int>;
+using VI = vector<ll>;
 using VVI = vector<VI>;
 using VD = vector<ld>;
 using VVD = vector<VD>;
@@ -28,61 +28,46 @@ mt19937 rnd(random_device{}());
 const ll M = 1e9 + 7;
 /*--------------------------------------*/
 
-class Solution {
-public:
-	int cnt;
-	VI nums;
-    int inversion(vector<int>& arr) {
-    	nums = arr;
-    	cnt = 0;
-    	int n = SZ(arr);
-    	merge_sort(0, n - 1, arr);
+const int N = 10000000;
+ll a[N];
+ll cnt;
 
-    	return cnt;
-    }
+void merge_sort(int l, int r){
+	if(l == r) return;
 
-    void merge_sort(int l, int r, VI &a){
-    	if(l == r){
-    		a = VI{nums[l]};
-    		return ;
-    	}
-    	int x = l + (r - l) / 2;
-    	int n = x - l + 1, m = r - x;
-    	VI b(n), c(m);
-    	merge_sort(l, x, b);
-    	merge_sort(x + 1, r, c);
+    int x = l + (r - l) / 2;
+    merge_sort(l, x);
+    merge_sort(x + 1, r);
 
-    	int k = 0, i = 0, j = 0;
-    	while(i < n && j < m){
-    		if(b[i] <= c[j]) a[k ++] = b[i++];
-    		else{
-    			cnt += x - l - i + 1;
-    			a[k ++] = c[j ++];
-    		}
-    	}
+	int n = x - l + 1, m = r - x;
+    VI b(n, 0), c(m, 0);
+    rep(i, 0, n) b[i] = a[i + l];
+    rep(i, 0, m) c[i] = a[i + x + 1];
 
-    	while(i < n) a[k++] = b[i++];
-    	while(j < m) a[k++] = c[j++];
-    }
-};
+	int k = l, i = 0, j = 0;
+	while(i < n && j < m){
+		if(b[i] <= c[j]) a[k ++] = b[i++];
+		else{
+			cnt += n - i;
+			a[k ++] = c[j ++];
+		}
+	}
+
+	while(i < n) a[k++] = b[i++];
+	while(j < m) a[k++] = c[j++];
+}
 
 
 int main(){
-	VVI a{
-		{5, 4, 3, 2, 1},
-		{1, 2, 3, 4},
-		{3, 3, 2, 2, 2, 4}, 
-		{1, 1},
-		{1},
-		{100, 99},
-		{3, 2, 1, 5, 2, 1}
-	};
 
-	Solution sol;
-
-	for(auto v: a) {
-		cout << sol.inversion(v) << endl;
-	}
+    int T; scanf("%d", &T);
+    while(T --){
+        int n; scanf("%d", &n);
+        rep(i, 0, n) cin >> a[i];        
+        cnt = 0;
+        merge_sort(0, n - 1);
+        cout << cnt << endl;
+    }
 
 	return 0;
 }
