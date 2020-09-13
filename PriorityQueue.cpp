@@ -54,3 +54,27 @@ void debug_out() { cerr << endl; }
 template <typename Head, typename... Tail>
 void debug_out(Head H, Tail... T) { cerr << " " << to_string(H); debug_out(T...); }
 #define dbg(...) cerr << "[" << #__VA_ARGS__ << "]:", debug_out(__VA_ARGS__)
+
+class Compare {
+public:
+	bool operator () (const PII& a, const PII& b) {
+		return a.fi > b.fi || (a.fi == b.fi && a.se > b.se);
+	}
+};
+
+int main() {
+	priority_queue<PII, vector<PII>, Compare> Q;
+
+	int n = 6;
+	rep(i, 0, n) Q.push({i, n - i - 1});
+	Q.push({0, 2});
+	Q.push({0, 3});
+	
+	while(!Q.empty()) {
+		auto v = Q.top();
+		Q.pop();
+		printf("(%d, %d)\n", v.fi, v.se);
+	} 
+
+	return 0;
+}

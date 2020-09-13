@@ -22,19 +22,20 @@ using PII = pair<int, int>;
 const ll M = 1e9 + 7;
 /*--------------------------------------*/
 
-namespace TRIE{
-	const int MAXN = 10100;
-	const int MAXC = 26;
+class Trie {
+public:
+	const static int MAXN = 10100;
+	const static int MAXC = 26;
 	int g[MAXN][MAXC], sz;
 	int val[MAXN];
 
-	void Init(){
+	Trie() {
 		sz = 1; memset(g[0], 0, sizeof(g[0]));
 	}
 
-	void Insert(string& s){
+	void insert(string& s) {
 		int u = 0, n = SZ(s);
-		rep(i, 0, n){
+		rep(i, 0, n) {
 			int c = s[i] - 'a';
 			if(!g[u][c]){
 				memset(g[sz], 0, sizeof(g[sz]));
@@ -46,13 +47,20 @@ namespace TRIE{
 		val[u] ++;
 	}
 
-	int Find(string& s){
+	int find(string& s) {
 		int u = 0, n = SZ(s);
-		rep(i, 0, n){
+		rep(i, 0, n) {
 			int c = s[i] - 'a';
 			if(!g[u][c]) return false;  // mismatch
 			u = g[u][c];
 		}	
 		return val[u] > 0;  // 1-found, 0-not found
 	}
+};
+
+
+int main() {
+	Trie trie;
+
+	return 0;
 }

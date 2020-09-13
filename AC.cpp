@@ -23,20 +23,21 @@ using VPII = vector<PII>;
 const ll M = 1e9 + 7;
 /*--------------------------------------*/
 
-namespace AC{
-    const int MAXN = 1010;
-    const int MAXC = 26;
+class AC {
+public:
+    const static int MAXN = 1010;
+    const static int MAXC = 26;
     int g[MAXN][MAXC], sz;  // trie goto
     int f[MAXN];            // suffix link
     int out[MAXN];          // output link   
     int val[MAXN];          // node value 
 
-    void Init(){
+    AC() {
         memset(g[0], 0, sizeof(g[0]));
         val[0] = 0; f[0] = 0; sz = 1;
     }
 
-    void Insert(string& s){
+    void insert(string& s) {
         int u = 0, n = SZ(s);
         rep(i, 0, n){
             int c = s[i] - 'a';
@@ -51,7 +52,7 @@ namespace AC{
         val[u] ++;
     }
 
-    void Build(){
+    void build() {
         queue<int> q;
         rep(c, 0, MAXC){
             if(g[0][c]) q.push(g[0][c]), f[g[0][c]] = 0;
@@ -70,7 +71,7 @@ namespace AC{
         }
     }
 
-    int Search(string& s){
+    int find(string& s) {
         int u = 0, n = SZ(s);
         int ans = 0;
         rep(i, 0, n){
@@ -82,4 +83,12 @@ namespace AC{
         }
         return ans;
     }
+};
+
+
+int main() {
+
+    AC ac;
+
+    return 0;
 }
