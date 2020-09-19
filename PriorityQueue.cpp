@@ -63,7 +63,15 @@ public:
 };
 
 int main() {
+	// method 1, using class operator ()
 	priority_queue<PII, vector<PII>, Compare> Q;
+
+	// method 2, using lambda function, recommanded
+	auto cmp = [&](int a, int b) {
+		return a > b;
+	};
+	priority_queue<int, vector<int>, decltype(cmp)> > q(cmp);
+
 
 	int n = 6;
 	rep(i, 0, n) Q.push({i, n - i - 1});
