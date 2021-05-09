@@ -18,7 +18,7 @@ const ll M = 20071027;
 /*-------------------------------*/
 
 
-struct KMP{
+struct KMP {
 	void GetPre(string& s, VI& pre){
 		int n = SZ(s);
 		pre.resize(n);
@@ -30,13 +30,13 @@ struct KMP{
 		}
 	}
 	
-	bool Match(string& s, string& p){
+	bool Match(string& s, string& p) {
 		VI pre;
 		GetPre(p, pre);
 		int n = SZ(s), m = SZ(p);
 		int k = -1;
 		rep(i, 0, n){
-			while(k != -1 && s[i] != p[k+1]) k = pre[k];
+			while(k != -1 && p[k+1] != s[i]) k = pre[k];
 			if(s[i] == p[k+1]) k ++;
 			if(k == m-1){   
 				return true;  

@@ -28,23 +28,25 @@ mt19937 rnd(random_device{}());
 const ll M = 1e9 + 7;
 /*--------------------------------------*/
 
-// Find the kth element of an array in O(n)
+// Find the kth element of an unordered array in O(n)
 class Solution
 {
 public:
     int find_Kth(int l, int r, int k, VI& a)
     {
-        if (l == r) return a[l];
+        if(l == r) return a[l];
 
-        int x = l + rnd() % (r - l + 1);
+        int x = l + rand() % (r - l + 1);
         swap(a[x], a[r]);
 
         int j = l - 1;
         for(int i = l; i < r; ++i) {
-            if (a[i] < a[r]) swap(a[++j], a[i]);
+            if(a[i] < a[r]) swap(a[++j], a[i]);
         }        
         swap(a[++j], a[r]);
+
         if(j == k - 1) return a[j];
+
         if(j > k - 1) return find_Kth(l, j - 1, k, a);
         return find_Kth(j + 1, r, k, a);
     }
@@ -64,7 +66,7 @@ int main() {
         int y = sol.find_Kth(0, n - 1, k, a);
         if(b[k - 1] != y) cnt ++;
     }
-    assert(cnt == 0);
+    cout << "cnt = " << cnt << endl;
     
     return 0;
 }
