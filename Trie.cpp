@@ -22,6 +22,14 @@ using PII = pair<int, int>;
 const ll M = 1e9 + 7;
 /*--------------------------------------*/
 
+struct TrieNode {
+	int num;
+	TrieNode* child[26];
+	TrieNode(): num(0) {
+		for(int i = 0; i < 26; ++i) child[i] = nullptr;
+	}
+};
+
 class Trie {
 public:
 	const static int MAXN = 10100;

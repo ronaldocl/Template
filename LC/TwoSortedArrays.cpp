@@ -88,10 +88,10 @@ double find_median_1(vector<int>& a, vector<int>& b) {
 	int m = a.size();
 	int n = b.size();
 	if((m + n) & 1) {
-		return find_Kth_2(a, b, (m + n) / 2 + 1);
+		return find_Kth_1(a, b, (m + n) / 2 + 1);
 	}
 	else {
-		return (find_Kth_2(a, b, (m + n) / 2) + find_Kth_2(a, b, (m + n) / 2 + 1)) / 2.0;
+		return (find_Kth_1(a, b, (m + n) / 2) + find_Kth_1(a, b, (m + n) / 2 + 1)) / 2.0;
 	}
 }
 
