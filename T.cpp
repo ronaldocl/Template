@@ -30,10 +30,11 @@ const int INF = 0x3f3f3f3f;
 /*--------------------------------------*/
  
 string to_string(const string& s) { return '"' + s + '"'; }
+
 string to_string(bool b) { return (b ? "true" : "false"); }
  
 template <size_t N>
-string to_string(bitset<N> v) { ostringstream oss; oss<<v; return oss.str(); }
+string to_string(bitset<N> v) { ostringstream oss; oss << v; return oss.str(); }
  
 template <typename A, typename B>
 string to_string(pair<A, B> p) {
@@ -47,10 +48,12 @@ string to_string(tuple<A, B, C> p) {
 
 template <typename T>
 string to_string(T& v) {
-    string res="{", sep; for(const auto& x:v) res+=sep+to_string(x), sep=", "; return res+"}";
+    string res="{", sep; for(const auto& x : v) res += sep + to_string(x), sep = ", "; return res + "}";
 }
 
 void debug_out() { cerr << endl; }
+
 template <typename Head, typename... Tail>
 void debug_out(Head H, Tail... T) { cerr << " " << to_string(H); debug_out(T...); }
+
 #define dbg(...) cerr << "[" << #__VA_ARGS__ << "]:", debug_out(__VA_ARGS__)
