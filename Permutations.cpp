@@ -59,51 +59,45 @@ void debug_out(Head H, Tail... T) { cerr << " " << to_string(H); debug_out(T...)
 #define dbg(...) cerr << "[" << #__VA_ARGS__ << "]:", debug_out(__VA_ARGS__)
 
 
-class Solution {
+class Permutations {
 public:
-	// Find the minimumn steps to make the max element in array a less than or equal to the min element in array b.
-	// In one step, you can choose one element in a or b and add or minus 1 of that element.
-    int minSteps(VI& a, VI& b) {
-    	auto [x1, y1] = minmax_element(all(a));
-    	auto [x2, y2] = minmax_element(all(b));
-    	int l = min(*x1, *x2);
-    	int r = max(*y1, *y2);
+    static bool next_perm(VI& a) {
+        int n = SZ(a);            
+        bool hasNext = false;
+        for(int i = n - 2; i >= 0; --i) {
+            if(a[i] < a[i + 1]) {
+                reverse(a.begin() + i + 1, a.end());
+                auto it = upper_bound(a.begin() + i + 1, a.end(), a[i]);
+                swap(a[i], *it);
+                hasNext = true;
+                break;
+            }
+        }
+        return hasNext;
+    }
 
-    	auto f = [&](int m) {
-    		int cnt = 0;
-    		for(auto v : a) if(v > m) cnt += v - m;
-    		for(auto v : b) if(v < m) cnt += m - v;
-    		return cnt;
-    	};
-
-    	while(l + 3 < r) {
-    		int m1 = l + (r - l) / 3;
-    		int m2 = l + (r - l) / 3 * 2;
-
-    		if(f(m1) > f(m2)) {
-    			l = m1 + 1;
-    		}
-    		else {
-    			r = m2;
-    		}
-    	}
-
-    	int ans = INF;
-    	rep(i, l, r + 1) ans = min(ans, f(i));
-
-    	return ans;
+    static bool prev_perm(VI& a) {
+        int n = SZ(a);            
+        bool hasPrev = false;
+        for(int i = n - 2; i >= 0; --i) {
+            if(a[i] > a[i + 1]) {
+                auto it = upper_bound(a.begin() + i + 1, a.end(), a[i]);                
+                swap(a[i], *prev(it));
+                reverse(a.begin() + i + 1, a.end());
+                hasPrev = true;
+                break;
+            }
+        }
+        return hasPrev;
     }
 };
 
+
 int main() {
+    VI a{1, 2, 3};
+    do {
+        dbg(a);
+    } while(Permutations::prev_perm(a));
 
-
-	VI a{1, 4};
-	VI b{1, 2, 3, 4};
-	Solution sol;
-	auto res = sol.minSteps(a, b);
-	dbg(res);
-
-
-	return 0;
+    return 0;
 }
